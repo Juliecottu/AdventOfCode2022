@@ -21,7 +21,7 @@ async function getPriorities() {
     j++
   }
  
-
+  // Part 1
   let acc = 0 ;
   for (let rucksack of rucksacks) {
     const compartment1 = rucksack.slice('0',rucksack.length/2),
@@ -35,12 +35,50 @@ async function getPriorities() {
     )
     for (let item of sharedItem) {
       const priority = itemPriorities.find(element => element[0] == item);
-      console.log(priority[1]);
       acc += priority[1];
     }
-    // shortestList  =  itemsInFirst.size < itemsInSecond.size ? itemsInFirst : itemsInSecond;
   }
-  console.log(acc);
+  // console.log(acc);
+
+  // Part 2
+  const numberOfElfTeam = rucksacks.length / 3;
+  let k = 0;
+  let decreasingRucksackArray = rucksacks,
+      teams = [];
+
+  while (k < numberOfElfTeam) {
+    let arrayOfThree = [];
+    for(let i = 0; i < 3; i++) {
+      arrayOfThree.push(decreasingRucksackArray[0]);
+      decreasingRucksackArray.shift();
+    }
+    teams.push(arrayOfThree);
+    k++;
+  }
+
+  let acc2 = 0;
+  for(let team of teams) {
+    let firstElf  = new Set([...team[0]]),
+        secondtElf = new Set([...team[1]]), 
+        thirdElf = new Set([...team[2]]);
+
+    const sharedItemsBetweenTwoFirsts = new Set(
+            [...firstElf].filter(item => secondtElf.has(item))
+          ),
+          uniqueSharedItem = new Set(
+            [...sharedItemsBetweenTwoFirsts].filter(item => thirdElf.has(item))
+          );
+    for (let item of uniqueSharedItem) {
+      const priority = itemPriorities.find(element => element[0] == item);
+      acc2 += priority[1];
+    }
+  }
+  console.log(acc2);
+
+
+
+  
+
 
 }
 
