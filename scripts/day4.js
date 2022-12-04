@@ -21,7 +21,7 @@ async function clearSections() {
       let serie = '';
       
       for(let i = Number(elfSections[0]); i <= Number(elfSections[1]); i++) {
-        serie += i+".";
+        serie += "."+i+".";
       }
       teamArray.push(serie);
 
@@ -31,12 +31,6 @@ async function clearSections() {
       nbOfFullyContains++;
     } ;
 
-    console.group();
-    console.log(teamOfTwo);
-    // console.log(teamArray);
-    // console.log(nbOfFullyContains);
-    console.log(teamArray[0].includes(teamArray[1]) || teamArray[1].includes(teamArray[0]));
-    console.groupEnd();
   }
   console.log(nbOfFullyContains);
  
