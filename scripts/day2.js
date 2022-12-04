@@ -18,7 +18,6 @@ const values = {
 response
   .then(data => data.text())
   .then(data => {
-    // console.log(data.replace(/ /g, 'Rock'));
     let newString = data.replace(/A|X/g, 'Rock');
     newString = newString.replace(/B|Y/g, 'Paper');
     newString = newString.replace(/C|Z/g, 'Scissors');
