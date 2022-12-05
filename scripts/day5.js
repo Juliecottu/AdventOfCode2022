@@ -51,7 +51,8 @@ async function moveCrates() {
   console.log(topCrates);
 
   function doMove(crates, startArray, finalArray) {
-    const chunk = initCrates[startArray - 1].splice(0, crates).reverse();
+    // const chunk = initCrates[startArray - 1].splice(0, crates).reverse(); // Part 1
+    const chunk = initCrates[startArray - 1].splice(0, crates); // Part 2
 
     initCrates[finalArray - 1] = chunk.concat(initCrates[finalArray - 1]);
   }
