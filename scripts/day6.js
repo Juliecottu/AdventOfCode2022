@@ -1,40 +1,49 @@
 console.log('--day 6-');
 
-const url = 'https://127.0.0.1:8000/docs/day6.txt';
+const url = 'https://127.0.0.1:8000/docs/fooldata.txt';
 
 async function findSubroutine() {
 
   const response = await fetch(url),
     data = await response.text();
 
-  const sub = checkThreePreviousChar(13);
-  console.log(sub, data.indexOf(sub) + 14);
+  const sub1 = checkPreviousChar(4);
+  console.log(sub1, data.indexOf(sub1) + 4); // Part 1
+
+  const sub2 = checkPreviousChar(14);
+  console.log(sub2, data.indexOf(sub2) + 14); // Part 2 la substring, l'index de son premier caractère + la longueur attendue pour trouver l'index du dernier
+
+
 
   /**
-   *
-   * @param i the studied character index
+   * Analyse la chaîne de N caractères précédant le caractère étudié
+   * 
+   * @param nbPreviousChar {number} the N previous characters (length)
    * @returns {string} the subRoutine String
    */
-    function checkThreePreviousChar(i) {
-      for (let i = 13; i < data.length; i++) {
-        const studiedChar = data.charAt(i),
-          previousChars = `${data.charAt(i - 3)}${data.charAt(i - 2)}${data.charAt(i - 1)}`;
+    function checkPreviousChar(nbPreviousChar) {
+      for (let i = nbPreviousChar - 1; i < data.length; i++) {
+        const studiedChar = data.charAt(i);
 
-        let largePreviousChar = '';
-        for (let k = 13; k >= 1; k--) {
-          largePreviousChar += data.charAt(i - k);
+        // Construction string des nbPreviousChar caractères précédents
+        let stringPreviousChar = '';
+        for (let k = nbPreviousChar - 1; k >= 1; k--) {
+          stringPreviousChar += data.charAt(i - k);
         }
 
+        // Set de toutes les lettres de la string de nbPreviousChar caractères précédents
         let setPreviousChars = new Set();
-        for(let j = 1; j < 14; j++) {
+        for(let j = 1; j < nbPreviousChar; j++) {
           setPreviousChars.add(data.charAt(i - j));
         }
-        if(setPreviousChars.size == 13) {
+
+        // Si setPreviousChars comporte bien nbPreviousChar caractères...
+        if(setPreviousChars.size == nbPreviousChar - 1) {
+          // Mais si elle comporte le caractère initial étudié, on continue
           if(setPreviousChars.has(studiedChar)) {
             continue;
-          } else {
-            // return previousChars + studiedChar;
-            return largePreviousChar + studiedChar;
+          } else { // Sinon on renvoie l'ensemble de la string de nbPreviousChar + le caractère analysé
+            return stringPreviousChar + studiedChar;
           }
         }
 
