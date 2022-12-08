@@ -30,7 +30,9 @@ for(let command of commandList) {
 filesystemContent.innerHTML = content;
 container.append(filesystemContent);
 
-let arrayOfAtMostTenThousand = [];
+let arrayOfAtMostTenThousand = [], 
+    arrayOfAllDirectorySizes = [],
+    arrayOfAtLeastThirtyThousand = [];
 
 let directories = container.querySelectorAll('[data-dir-id]') ;
 for(let directory of directories) {
@@ -38,7 +40,6 @@ for(let directory of directories) {
   if(directory.dataset.dirId != 'filesystem') {
     const parent = directory.parentNode;
     if(parent) {
-      console.log(directory, parent, parent.dataset.dirId);
       directory.dataset.dirId = `${parent.dataset.dirId}_${directory.dataset.dirId}`;
     }
   }
@@ -50,15 +51,32 @@ for(let directory of directories) {
     totalFileSizes.push(parseInt(file.dataset.fileSize));
   }
   let directorySize = totalFileSizes.reduce((accumulator, currentValue) => accumulator + currentValue);
+  arrayOfAllDirectorySizes.push([directory.dataset.dirId, directorySize]);
   if(directorySize < 100000) {
     arrayOfAtMostTenThousand.push([directory.dataset.dirId, directorySize]);
   }
+  if(directorySize > 30000000) {
+    arrayOfAtLeastThirtyThousand.push([directory.dataset.dirId, directorySize]);
+  }
 }
-let sum = 0 ;
-for(let row of arrayOfAtMostTenThousand) {
-  sum += row[1];
+// let sum = 0 ;
+// for(let row of arrayOfAtMostTenThousand) {
+//   sum += row[1];
+// }
+// console.log('sum', sum);
+
+let sumForAll = 0 ;
+for(let row of arrayOfAllDirectorySizes) {
+  sumForAll += row[1];
 }
-console.log('sum', sum);
+const missingSpace = 30000000 - (70000000 - arrayOfAllDirectorySizes[0][1]);
+let arrayOfEligibleFolders = [];
+for(let directorySize of arrayOfAllDirectorySizes) {
+  if(directorySize[1] >= missingSpace) {
+    arrayOfEligibleFolders.push(directorySize[1]);
+  }
+}
+console.log(arrayOfEligibleFolders.sort(function(a, b){return a-b}));
 
 }
 
