@@ -29,9 +29,8 @@ async function calculateFolderSize() {
 
   for(let column of forestColumns) {
     let columnCopy = column;
-    console.log(column);
-    // const highestValueInThatColumn = column.sort().reverse().shift();
-    // console.log(highestValueInThatColumn);
+    const highestValueInThatColumn = columnCopy.sort().reverse().shift();
+    console.log(columnCopy, highestValueInThatColumn);
   }
 
 
