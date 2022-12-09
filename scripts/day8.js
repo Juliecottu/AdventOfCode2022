@@ -20,17 +20,24 @@ async function calculateFolderSize() {
   for(let i = 0; i < forestRowLength; i++) {
     let column = []
     for(let row of forestRows) {
+
       let tree = row.split('')[i];
       column.push(tree);
     }
     forestColumns.push(column);
   }
   console.log("forestColumns", forestColumns);
+  const forestColumnClone = forestColumns.slice(0);
+  console.log("forestColumnsClone", forestColumnClone);
 
-  for(let column of forestColumns) {
-    let columnCopy = column;
-    const highestValueInThatColumn = columnCopy.sort().reverse().shift();
-    console.log(columnCopy, highestValueInThatColumn);
+
+  for(let cloneColumn of forestColumnClone) {
+    cloneColumn.sort();
+    const topTree = cloneColumn[0],
+          bottomTree = cloneColumn[cloneColumn.length - 1];
+    console.log(cloneColumn);
+          // highestValueInThatColumn = [...cloneColumn].sort().reverse().shift();
+    console.log(topTree, bottomTree);
   }
 
 
